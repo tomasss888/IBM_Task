@@ -13,21 +13,13 @@ const search = async (req, res, next) => {
         url: "https://api.giphy.com/v1/gifs/search?" +
             "api_key=" + process.env.GIPHY_APIKEY +
             "&q="      + searchInput +
-            "&limit="  + "5" +
-            "&offset=" + "0" +
+            "&limit="  + 5 +
+            "&offset=" + 0 +
             "&rating=" + "g" +
             "&lang="   + "en",
         method: 'GET',
         headers: {
             Accept: 'application/json'
-        },
-        body: {
-            "api_key": process.env.GIPHY_APIKEY,
-            "q": "apple",
-            "limit": 5,
-            "offset": 0,
-            "rating": "g",
-            "lang": "en"
         },
         json: true
     }
