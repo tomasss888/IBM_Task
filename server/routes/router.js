@@ -3,10 +3,10 @@ var router = express.Router();
 
 //------------------// controller routes
 const searchController = require('../controller/searchController.js'); 
-router.get('/getGIF', searchController.search); 
+router.get('/api/getGIF', searchController.search); 
 
-router.get('/', (req, res) => {
-    res.send('Hello World!')
+router.get('/api', (req, res) => {
+    res.send('it works')
 })
 
 module.exports = router;

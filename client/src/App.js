@@ -29,7 +29,7 @@ function App() {
     // ADD REAL API HERE
     // const API_KEY = '';
     //fetch((`localhost:3000/getImage?query={props.searchTerm}`);
-    await fetch(`http://localhost:3578/getGIF?input=${searchInput}`, {
+    await fetch(`http://localhost:3578/api/getGIF?input=${searchInput}`, {
       method: "GET",
       headers: {
         'Accept': 'application/json'
