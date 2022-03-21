@@ -16,8 +16,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
 
-  const [searchInput, setSearchInput] = useState("");
-  const [FoundGIF, setFoundGIF] = useState([]);
+  const [searchInput, setSearchInput] = useState("")
   const [error, setError] = useState(null);
   const [isLoaded, setIsLoaded] = useState(false);
   const [isInitiated, setisInitiated] = useState(false);
@@ -29,7 +28,7 @@ function App() {
     // ADD REAL API HERE
     // const API_KEY = '';
     //fetch((`localhost:3000/getImage?query={props.searchTerm}`);
-    await fetch(`http://localhost:3578/api/getGIF?input=${searchInput}`, {
+    await fetch(`http://89.116.176.177:3578/api/getGIF?input=${searchInput}`, {
       method: "GET",
       headers: {
         'Accept': 'application/json'
