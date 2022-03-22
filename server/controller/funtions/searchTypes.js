@@ -23,7 +23,7 @@ function searchTypes(text, method) {
         console.log("method type is : " + method)
 
         // Default search
-        if (method == undefined || method == "None" || method == "") {
+        if (method === undefined || method == "None" || method == "") {
 
             console.log("nothing")
             res({ 0: { 'text': text } })
@@ -46,13 +46,19 @@ function searchTypes(text, method) {
 
             getResults(analyzeParams)
                 .then(data => {
-                    console.log(results)
+
+                    //console.log(data)
+                    if (data.status > 400)
+                        res(data)
                     res(data.result.concepts)
                 })
+                .catch(function (err) {
+                    res(err)
+                });
 
         }
 
-        // Emotions option
+        // Emotions option <Not Implemented> :)
         if (method == "Emotions") {
 
             analyzeParams = {
@@ -65,9 +71,12 @@ function searchTypes(text, method) {
 
             getResults(analyzeParams)
                 .then(data => {
-                    console.log(results)
+                    //console.log(results)
                     res(data.result.emotion.targets)
                 })
+                .catch(function (err) {
+                    res(err)
+                });
 
         }
 
@@ -87,9 +96,14 @@ function searchTypes(text, method) {
 
             getResults(analyzeParams)
                 .then(data => {
-                    console.log(results)
+                    //console.log(data)
+                    if (data.status > 400)
+                        res(data)
                     res(data.result.keywords)
                 })
+                .catch(function (err) {
+                    res(err)
+                });
 
         }
 
@@ -108,9 +122,14 @@ function searchTypes(text, method) {
 
             getResults(analyzeParams)
                 .then(data => {
-                    console.log(results)
+                    //console.log(data)
+                    if (data.status > 400)
+                        res(data)
                     res(data.result.entities)
                 })
+                .catch(function (err) {
+                    res(err)
+                });
 
         }
 
@@ -129,7 +148,7 @@ function getResults(analyzeParams) {
             return analysisResults;
         })
         .catch(err => {
-            console.log('error:', err);
+            //console.log('error:', err);
             return err;
         });
 

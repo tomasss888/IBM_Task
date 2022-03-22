@@ -25,9 +25,19 @@ const searchController = {
 
         searchTypes.searchTypes(searchInput, searchType).then((results) => {
 
-            console.log(results);
-            console.log(results[0].text);
-        
+            console.log(results)
+
+            if (results.status > 400){
+                var errorToObj = JSON.parse(results.body)
+                console.log("errrorrrrrrrr")
+                return res.json({
+                    success: "false",
+                    error: { error: { meta: {  
+                        status : errorToObj.code, 
+                        msg : errorToObj.error
+                    } } }
+                })
+            }
 
             var options = {
                 url: "https://api.giphy.com/v1/gifs/search?" +
@@ -45,17 +55,18 @@ const searchController = {
             }
             request(options)
                 .then((parsedBody) => {
-                    console.log("Searching GIPHY for <" + searchInput + ">")
+                    //console.log("Searching GIPHY for <" + searchInput + ">")
                     res.json({
                         data: parsedBody.data,
-                        watson: results
+                        watson: results,
+                        lookingFor: results[0].text
                     })
                 })
                 .catch(function (err) {
                     res.json({ success: "false", error: err });
                 });
-        
-            })
+
+        })
 
     },
 

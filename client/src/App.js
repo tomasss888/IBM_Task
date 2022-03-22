@@ -10,27 +10,25 @@ import {
   useRouteMatch,
   useParams
 } from "react-router-dom";
-import { Spinner, Container, Row, Col } from 'react-bootstrap';
+import { Spinner, Container, Row, Col, ButtonGroup, Button, Alert } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 
 function App() {
 
   const [searchInput, setSearchInput] = useState("")
-  const [error, setError] = useState(null);
+  const [error, setError] = useState([]);
   const [isLoaded, setIsLoaded] = useState(false);
   const [isInitiated, setisInitiated] = useState(false);
   const [items, setItems] = useState([]);
   const [searchMethod, setSearchMethod] = useState("")
   const [watsonObject, setwatsonObject] = useState([])
+  const [selectedButton, setselectedButton] = useState("")
+  const [currentSearchedWord, setcurrentSearchedWord] = useState("")
 
 
-  const fetchData = async () => {
-    //return ['Title 1', 'Title 2', 'Title 3'];
-    // ADD REAL API HERE
-    // const API_KEY = '';
-    //fetch((`localhost:3000/getImage?query={props.searchTerm}`);
-    await fetch(`http://demo.therejoice.co.uk/api/getGIF?input=${searchInput}&method=${searchMethod}`, {
+  async function fetchData(data, method, primarySearch) {
+    await fetch(`http://demo.therejoice.co.uk/api/getGIF?input=${data}&method=${method}`, {
       method: "GET",
       headers: {
         'Accept': 'application/json'
@@ -39,8 +37,17 @@ function App() {
       .then(
         (result) => {
           setIsLoaded(true);
+
+          if (result.success == "false") {
+            setError(result.error.error.meta)
+            return
+          }
+
           setItems(result.data);
-          setwatsonObject(result.watson)
+          setselectedButton(result.lookingFor)
+          if (primarySearch) {
+            setwatsonObject(result.watson)
+          }
 
         },
         (error) => {
@@ -50,6 +57,15 @@ function App() {
         }
 
       )
+  }
+
+
+  const handleSelectedButton = (event) => {
+    console.log(event.target.value)
+    setIsLoaded(false);
+    setisInitiated(true);
+    setcurrentSearchedWord(event.target.value)
+    fetchData(event.target.value, "None", false);
 
   }
 
@@ -57,10 +73,10 @@ function App() {
 
   const ImageSearch = () => {
     setIsLoaded(false);
+    setError([]); // reset error message
     if (searchInput == null) return;
     setisInitiated(true);
-    fetchData(searchInput);
-    console.log(watsonObject.length)
+    fetchData(searchInput, searchMethod, true);
   }
 
 
@@ -73,34 +89,48 @@ function App() {
 
         <h1>GIF Search</h1>
         <div className="search">
+
+          {/* Searchbar */}
           <SearchBar saveSearchInput={setSearchInput} handleSearch={ImageSearch} saveSearchMethod={setSearchMethod} />
 
           <div>
 
+            {/* Error message box */}
+            {(Object.keys(error).length > 1) ? (
+              <Alert variant="danger">
+                <p>
+                  {error.status} - {error.msg}
+                </p>
+              </Alert>
+            ) : <></>}
+
+
+            {/* Selectable buttons for watson based search */}
             <Row className="my-2" >
-
-              {(watsonObject.length == undefined || !watsonObject.length > 1) ? <></> : (watsonObject.map((data) => (
-
-                <p key={data.text}>{data.text}</p>
-
-              )))}
+              <ButtonGroup onClick={e => handleSelectedButton(e)}>
+                {(watsonObject.length === undefined || !watsonObject.length > 1 || error === undefined) ? <></> : (watsonObject.map((data) => (
+                  <Button
+                    key={data.text}
+                    value={data.text}
+                    variant={(selectedButton === data.text) ? 'secondary' : 'outline-secondary'}
+                  >
+                    {data.text}
+                  </Button>
+                )))}
+              </ButtonGroup>
             </Row>
 
-            
+            {/* GIF table */}
             <Row className="my-2" >
-
-              {(!isInitiated) ? <p></p> : (!isLoaded) ? <div className="d-flex justify-content-center"><Spinner animation="border" /></div> : (items.map((data) => (
-
+              {(!isInitiated || !error === null) ? <p></p> : (!isLoaded) ? <div className="d-flex justify-content-center"><Spinner animation="border" /></div> : (items.map((data) => (
                 <Col key={data.id}>
                   <ImageCard data={data}></ImageCard>
                 </Col>
-
               )))}
             </Row>
 
           </div>
         </div>
-
       </Container>
     </Router>
   );

@@ -1,4 +1,4 @@
-import { InputGroup, FormControl, Button, DropdownButton, Dropdown, Form} from 'react-bootstrap';
+import { InputGroup, FormControl, Button, Form} from 'react-bootstrap';
 
 const SearchBar = props => (
 
