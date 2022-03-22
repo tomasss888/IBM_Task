@@ -2,21 +2,8 @@ import { InputGroup, FormControl, Button, Form} from 'react-bootstrap';
 
 const SearchBar = props => (
 
-
     <form action="/" method="get">
-        {/* <input
-            type="text"
-            id="header-search"
-            placeholder="Search for GIFs"
-            name="search"
-            onChange={e => props.saveSearchInput(e.target.value)}
-        />
-        <button type="button" onClick={() => props.handleSearch()}>
-            Search
-        </button> */}
-
-
-
+        
         <InputGroup className="mb-3">
             <FormControl
                 placeholder="Search for GIFs"
@@ -34,14 +21,12 @@ const SearchBar = props => (
                 </Form.Select>
             </Form.Group>
 
-            <Button variant="outline-secondary" id="button-addon2" type="button" value="Submit" onClick={() => props.handleSearch()}>
+            <Button variant="outline-secondary" id="button-addon2" type="submit" value="Submit" onClick={(e) => props.handleSearch(e)}>
                 Search
             </Button>
         </InputGroup>
 
-
     </form>
-
 
 );
 

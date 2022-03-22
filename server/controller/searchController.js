@@ -3,33 +3,22 @@ const NaturalLanguageUnderstandingV1 = require('ibm-watson/natural-language-unde
 const { IamAuthenticator } = require('ibm-watson/auth');
 var searchTypes = require("./funtions/searchTypes")
 
-const naturalLanguageUnderstanding = new NaturalLanguageUnderstandingV1({
-    version: '2021-08-01',
-    authenticator: new IamAuthenticator({
-        apikey: process.env.WATSON_APIKEY,
-    }),
-    serviceUrl: 'https://api.eu-de.natural-language-understanding.watson.cloud.ibm.com/instances/6c94ff95-22cc-4c85-bfb7-d6f55e1f3522'
-});
-
 
 const searchController = {
 
+    // getGIF main search api
     search(req, res) {
-
-        // add smth if string is empty
 
         var searchInput = req.query.input;
         var searchType = req.query.method;
 
-        var dataWatson = "no"
-
         searchTypes.searchTypes(searchInput, searchType).then((results) => {
 
             console.log(results)
-
+            
+            // checks if returned with correct status code
             if (results.status > 400) {
                 var errorToObj = JSON.parse(results.body)
-                console.log("errrorrrrrrrr")
                 return res.json({
                     success: "false",
                     error: {
@@ -42,7 +31,7 @@ const searchController = {
                     }
                 })
             }
-
+            // Options for GIPHY api
             var options = {
                 url: "https://api.giphy.com/v1/gifs/search?" +
                     "api_key=" + process.env.GIPHY_APIKEY +
@@ -57,9 +46,9 @@ const searchController = {
                 },
                 json: true
             }
+            // Call to GIPHY API
             request(options)
                 .then((parsedBody) => {
-                    //console.log("Searching GIPHY for <" + searchInput + ">")
                     res.json({
                         data: parsedBody.data,
                         watson: results,
@@ -73,36 +62,6 @@ const searchController = {
         })
 
     },
-
-
-    watson(req, res) {
-
-
-
-
-
-        const analyzeParams = {
-            'text': "test text",
-            'features': {
-                'concepts': {
-                    'limit': 5
-                }
-            }
-        };
-
-        naturalLanguageUnderstanding.analyze(analyzeParams)
-            .then(analysisResults => {
-                res.json(analysisResults);
-            })
-            .catch(err => {
-                console.log('error:', err);
-                res.json(err);
-            });
-
-
-
-    }
-
 
 };
 

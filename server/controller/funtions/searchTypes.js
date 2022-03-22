@@ -4,23 +4,21 @@ const NaturalLanguageUnderstandingV1 = require('ibm-watson/natural-language-unde
 const { IamAuthenticator } = require('ibm-watson/auth');
 
 const naturalLanguageUnderstanding = new NaturalLanguageUnderstandingV1({
-    version: '2021-08-01',
+    version: process.env.WATSON_VERSION,
     authenticator: new IamAuthenticator({
         apikey: process.env.WATSON_APIKEY,
     }),
-    serviceUrl: 'https://api.eu-de.natural-language-understanding.watson.cloud.ibm.com/instances/6c94ff95-22cc-4c85-bfb7-d6f55e1f3522'
+    serviceUrl: process.env.WATSON_URL
 });
 
 
-
+// analyzes text with selected method
 function searchTypes(text, method) {
-
 
     return new Promise(function (res, rej) {
 
         var analyzeParams = {}
-
-        console.log("method type is : " + method)
+        console.log("Method type is : " + method)
 
         // Default search
         if (method === undefined || method == "None" || method == "") {
@@ -41,42 +39,7 @@ function searchTypes(text, method) {
                     }
                 }
             };
-
-            var results = [];
-
-            getResults(analyzeParams)
-                .then(data => {
-
-                    //console.log(data)
-                    if (data.status > 400)
-                        res(data)
-                    res(data.result.concepts)
-                })
-                .catch(function (err) {
-                    res(err)
-                });
-
-        }
-
-        // Emotions option <Not Implemented> :)
-        if (method == "Emotions") {
-
-            analyzeParams = {
-                'text': text,
-                'features': {
-                    'emotion': {
-                    }
-                }
-            };
-
-            getResults(analyzeParams)
-                .then(data => {
-                    //console.log(results)
-                    res(data.result.emotion.targets)
-                })
-                .catch(function (err) {
-                    res(err)
-                });
+            res(getResults(analyzeParams, "Concepts"))
 
         }
 
@@ -93,18 +56,7 @@ function searchTypes(text, method) {
                     }
                 }
             };
-
-            getResults(analyzeParams)
-                .then(data => {
-                    //console.log(data)
-                    if (data.status > 400)
-                        res(data)
-                    res(data.result.keywords)
-                })
-                .catch(function (err) {
-                    res(err)
-                });
-
+            res(getResults(analyzeParams, "Keywords"))
         }
 
         // Entities option
@@ -119,41 +71,30 @@ function searchTypes(text, method) {
                     }
                 }
             };
-
-            getResults(analyzeParams)
-                .then(data => {
-                    //console.log(data)
-                    if (data.status > 400)
-                        res(data)
-                    res(data.result.entities)
-                })
-                .catch(function (err) {
-                    res(err)
-                });
-
+            res(getResults(analyzeParams, "Entities"))
         }
-
-
 
     })
 
-
 }
 
-// call to api with chosen options
-function getResults(analyzeParams) {
+// call to api with chosen parameters(analyzeParams)
+function getResults(analyzeParams, method) {
 
     return naturalLanguageUnderstanding.analyze(analyzeParams)
-        .then(analysisResults => {
-            return analysisResults;
+        .then(data => {
+            if (method == "Concepts")
+                return data.result.concepts;
+            if (method == "Keywords")
+                return data.result.keywords;
+            if (method == "Entities")
+                return data.result.entities;
         })
         .catch(err => {
             //console.log('error:', err);
             return err;
         });
-
 }
-
 
 module.exports = {
     searchTypes
