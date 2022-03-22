@@ -27,15 +27,19 @@ const searchController = {
 
             console.log(results)
 
-            if (results.status > 400){
+            if (results.status > 400) {
                 var errorToObj = JSON.parse(results.body)
                 console.log("errrorrrrrrrr")
                 return res.json({
                     success: "false",
-                    error: { error: { meta: {  
-                        status : errorToObj.code, 
-                        msg : errorToObj.error
-                    } } }
+                    error: {
+                        error: {
+                            meta: {
+                                status: errorToObj.code,
+                                msg: errorToObj.error
+                            }
+                        }
+                    }
                 })
             }
 
@@ -78,10 +82,10 @@ const searchController = {
 
 
         const analyzeParams = {
-            'text': "IBM is a very good company",
+            'text': "test text",
             'features': {
                 'concepts': {
-                    'limit': 3
+                    'limit': 5
                 }
             }
         };

@@ -39,7 +39,7 @@ function App() {
           setIsLoaded(true);
 
           if (result.success == "false") {
-            setError(result.error.error.meta)
+            setError(result.error.error)
             return
           }
 
@@ -96,11 +96,11 @@ function App() {
           <div>
 
             {/* Error message box */}
-            {(Object.keys(error).length > 1) ? (
+            {(Object.keys(error).length != 0) ? (
               <Alert variant="danger">
-                <p>
-                  {error.status} - {error.msg}
-                </p>
+                <p>{(error?.meta?.status ?? undefined) ? error.meta.status : null}</p>
+                <p>{(error?.meta?.msg ?? undefined) ? error.meta.msg : null}</p>
+                <p>{(error?.code ?? undefined) ? error.code : null}</p>
               </Alert>
             ) : <></>}
 

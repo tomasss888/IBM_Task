@@ -37,7 +37,7 @@ function searchTypes(text, method) {
                 'text': text,
                 'features': {
                     'concepts': {
-                        'limit': 3
+                        'limit': 5
                     }
                 }
             };
