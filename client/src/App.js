@@ -21,6 +21,8 @@ function App() {
   const [isLoaded, setIsLoaded] = useState(false);
   const [isInitiated, setisInitiated] = useState(false);
   const [items, setItems] = useState([]);
+  const [searchMethod, setSearchMethod] = useState("")
+  const [watsonObject, setwatsonObject] = useState([])
 
 
   const fetchData = async () => {
@@ -28,7 +30,7 @@ function App() {
     // ADD REAL API HERE
     // const API_KEY = '';
     //fetch((`localhost:3000/getImage?query={props.searchTerm}`);
-    await fetch(`http://demo.therejoice.co.uk/api/getGIF?input=${searchInput}`, {
+    await fetch(`http://demo.therejoice.co.uk/api/getGIF?input=${searchInput}&method=${searchMethod}`, {
       method: "GET",
       headers: {
         'Accept': 'application/json'
@@ -37,8 +39,8 @@ function App() {
       .then(
         (result) => {
           setIsLoaded(true);
-          setItems(result);
-          console.log(result.json);
+          setItems(result.data);
+          setwatsonObject(result.watson)
 
         },
         (error) => {
@@ -58,6 +60,7 @@ function App() {
     if (searchInput == null) return;
     setisInitiated(true);
     fetchData(searchInput);
+    console.log(watsonObject.length)
   }
 
 
@@ -70,8 +73,20 @@ function App() {
 
         <h1>GIF Search</h1>
         <div className="search">
-          <SearchBar saveSearchInput={setSearchInput} handleSearch={ImageSearch} />
+          <SearchBar saveSearchInput={setSearchInput} handleSearch={ImageSearch} saveSearchMethod={setSearchMethod} />
+
           <div>
+
+            <Row className="my-2" >
+
+              {(watsonObject.length == undefined || !watsonObject.length > 1) ? <></> : (watsonObject.map((data) => (
+
+                <p key={data.text}>{data.text}</p>
+
+              )))}
+            </Row>
+
+            
             <Row className="my-2" >
 
               {(!isInitiated) ? <p></p> : (!isLoaded) ? <div className="d-flex justify-content-center"><Spinner animation="border" /></div> : (items.map((data) => (
