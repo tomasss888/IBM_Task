@@ -58,10 +58,8 @@ const searchController = {
                 .catch(function (err) {
                     res.json({ success: "false", error: err });
                 });
-
         })
-
-    },
+    }
 
 };
 

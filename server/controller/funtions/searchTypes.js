@@ -20,13 +20,9 @@ function searchTypes(text, method) {
         var analyzeParams = {}
         console.log("Method type is : " + method)
 
-        // Default search
-        if (method === undefined || method == "None" || method == "") {
-
-            console.log("nothing")
+        // Default search (doesn't need to call to Watson API)
+        if (method === undefined || method == "None" || method == "") 
             res({ 0: { 'text': text } })
-
-        }
 
         // Concepts option
         if (method == "Concepts") {

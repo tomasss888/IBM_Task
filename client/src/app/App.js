@@ -14,12 +14,12 @@ function App() {
 
   const [searchInput, setSearchInput] = useState("")
   const [error, setError] = useState([]);
-  const [isLoaded, setIsLoaded] = useState(false);
-  const [isInitiated, setisInitiated] = useState(false);
-  const [items, setItems] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [searchInitiated, setSearchInitiated] = useState(false);
+  const [gifData, setGifData] = useState([]);
   const [searchMethod, setSearchMethod] = useState("")
-  const [watsonObject, setwatsonObject] = useState([])
-  const [selectedButton, setselectedButton] = useState("")
+  const [watsonSelectableOptions, setWatsonSelectableOptions] = useState([])
+  const [currentSelectedButton, setCurrentSelectedButton] = useState("")
   const [currentSearchedWord, setcurrentSearchedWord] = useState("")
 
   // Call to backend api and apply results to hooks
@@ -32,19 +32,19 @@ function App() {
     }).then(res => res.json())
       .then(
         (result) => {
-          setIsLoaded(true);
+          setIsLoading(true);
           if (result.success == "false") {
             setError(result.error.error)
             return
           }
-          setItems(result.data);
-          setselectedButton(result.lookingFor)
+          setGifData(result.data);
+          setCurrentSelectedButton(result.lookingFor)
           if (primarySearch) {
-            setwatsonObject(result.watson)
+            setWatsonSelectableOptions(result.watson)
           }
         },
         (error) => {
-          setIsLoaded(true);
+          setIsLoading(true);
           setError(error);
         }
       )
@@ -52,8 +52,8 @@ function App() {
 
   // Handles events with search selectable buttons
   const handleSelectedButton = (event) => {
-    setIsLoaded(false);
-    setisInitiated(true);
+    setIsLoading(false);
+    setSearchInitiated(true);
     setcurrentSearchedWord(event.target.value)
     fetchData(event.target.value, "None", false);
 
@@ -62,9 +62,9 @@ function App() {
   // Handles search submit
   const ImageSearch = (e) => {
     e.preventDefault();   // prevents page refresh after form submit
-    setIsLoaded(false);
+    setIsLoading(false);
     setError([]);
-    setisInitiated(true);
+    setSearchInitiated(true);
     fetchData(searchInput, searchMethod, true);
   }
 
@@ -94,19 +94,19 @@ function App() {
 
             {/* Selectable buttons for watson based search */}
             <SelectableButtons
-              watsonObject={watsonObject}
+              watsonObject={watsonSelectableOptions}
               error={error}
-              selectedButton={selectedButton}
+              selectedButton={currentSelectedButton}
               handleSelectedButton={handleSelectedButton}
             >
             </SelectableButtons>
 
             {/* GIF table */}
             <ImageCard
-              isInitiated={isInitiated}
+              isInitiated={searchInitiated}
               error={error}
-              isLoaded={isLoaded}
-              items={items}
+              isLoaded={isLoading}
+              items={gifData}
             >
             </ImageCard>
 
