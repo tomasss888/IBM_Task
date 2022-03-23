@@ -18,13 +18,23 @@ A project to showcase Watson Natural Language Understanding. This project uses w
 ```
 git clone https://github.com/tomasss888/IBM_Task.git 
 ```
-2. Add GIPHY and Watson API keys  to .env
+2. Add GIPHY and Watson API keys  to .env for server side
 ```
 GIPHY_APIKEY='giphy api key'
 WATSON_APIKEY='watson api key'
+WATSON_URL='watson api cloud URL'
+WATSON_VERSION='watson api version'
+FRONT_END_URL='ip of your frontend server'
 ```
 
-3. Start the docker using shell script
+3. And do the same for config.json in client side
+```
+{
+    "SERVER_URL": "ip of your backend server"
+}
+```
+
+4. Start the docker using shell script
 ```
 ./start.sh
 ```
