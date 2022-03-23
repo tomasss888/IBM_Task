@@ -23,9 +23,14 @@
 
 }
 
+.image-container{
+    justify-content: space-between;
+}
+
 .col {
-    flex-grow: 1;
-    justify-content: center;
+    flex-grow: 0;
+    flex-shrink: 1;
+    flex-basis: 0;
     align-content: center;
 }
 
@@ -56,4 +61,8 @@ element {
 
     top: 0px;
 
+}
+
+.spinner{
+    width: 100%;
 }

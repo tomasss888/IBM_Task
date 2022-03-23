@@ -9,16 +9,18 @@ const ImageCard = props => {
 
     return (
         <Fancybox options={{ infinite: false }}>
-            <div className="g-4 d-flex align-items-top justify-content-center" >
-                {(!props.isInitiated || !props.error === null) ? <p></p> : (!props.isLoaded) ? <Spinner animation="border" /> : splitItems.map((data, index) => (
-                    <Col className='GifList'>
-                        <div className="column">
-                            <CardMain
-                                items={data}
-                            >
-                            </CardMain>
-                        </div>
-                    </Col>
+            <div className="g-4 d-flex align-items-top image-container" >
+                {(!props.isInitiated || !props.error === null) ? <p></p> : (!props.isLoaded) ? <div className="justify-content-center spinner"><Spinner animation="border" /> </div>: splitItems.map((data, index) => (
+                    <>
+                        <Col className='GifList'>
+                            <div className="column">
+                                <CardMain
+                                    items={data}
+                                >
+                                </CardMain>
+                            </div>
+                        </Col>
+                    </>
                 ))}
             </div>
         </Fancybox>
