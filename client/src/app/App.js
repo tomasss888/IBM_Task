@@ -33,7 +33,7 @@ function App() {
       .then(
         (result) => {
           setIsLoading(true);
-          if (result.success == "false") {
+          if (result.success === "false") {
             setError(result.error.error)
             return
           }

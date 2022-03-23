@@ -86,6 +86,7 @@ function getResults(analyzeParams, method) {
 
     return naturalLanguageUnderstanding.analyze(analyzeParams)
         .then(data => {
+            console.log("Received data from watson API succesfully")
             if (method == "Concepts")
                 return data.result.concepts;
             if (method == "Keywords")

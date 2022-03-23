@@ -1,7 +1,6 @@
 import { Card, Spinner, Col } from 'react-bootstrap';
 import Fancybox from "../../functions/fancybox";
 import "./ImageCard.css"
-import React, { useState, useEffect, useRef } from "react";
 
 const ImageCard = props => {
 

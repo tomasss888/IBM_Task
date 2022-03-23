@@ -13,7 +13,7 @@ const searchController = {
         var searchType = req.query.method;
 
         searchTypes.searchTypes(searchInput, searchType).then((results) => {
-
+            
             // checks if returned with correct status code
             if (results.status > 400) {
                 var errorToObj = JSON.parse(results.body)
@@ -26,6 +26,19 @@ const searchController = {
                                 msg: errorToObj.error
                             }
                         }
+                    }
+                })
+            }
+            // checks if object is empty
+            if(results.length === 0){
+                return res.json({
+                    success: "false",
+                    error: {
+                        error: {
+                            meta: {
+                                msg: "Haven't found any relevant words"
+                            }
+                        }   
                     }
                 })
             }
