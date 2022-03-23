@@ -1,15 +1,16 @@
 .card {
-    box-shadow: -2px 4px 10px #adadad;
+    box-shadow: -2px 5px 10px #8a8a8a;
     vertical-align: middle;
     display: flex;
     align-items: center;
-    height: 100%;
     flex-direction: column;
+    margin-bottom: 35px;
+    border-radius: 5px;
 
 }
 
 .card:hover {
-    box-shadow: -10px 15px 15px #adadad;
+    box-shadow: -10px 15px 15px #8a8a8a;
     cursor: pointer;
 
 }
@@ -19,14 +20,35 @@
     flex-wrap: wrap;
     align-items: flex-start;
     flex-direction: row;
-    align-items: center;
-    align-items: flex-end;
-
 
 }
 
 .col {
     flex-grow: 1;
+    justify-content: center;
+    align-content: center;
+}
+
+.GifList {
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
+    position: relative;
+}
+
+.GifListItem {
+    border-radius: 5px;
+    box-shadow: 0 4px 10px 0 rgba(0, 0, 0, .05), 0 2px 4px 0 rgba(0, 0, 0, .08);
+    cursor: pointer;
+    margin: 20px 10px;
+}
+
+.GifList .column {
+    flex-basis: 1;
+    flex-grow: 1;
+    height: 100%;
+    width: 1;
+    margin: 0;
 }
 
 

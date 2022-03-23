@@ -34,7 +34,7 @@ const searchController = {
                 url: "https://api.giphy.com/v1/gifs/search?" +
                     "api_key=" + process.env.GIPHY_APIKEY +
                     "&q=" + results[0].text +
-                    "&limit=" + 8 +
+                    "&limit=" + 12 +
                     "&offset=" + 0 +
                     "&rating=" + "g" +
                     "&lang=" + "en",
