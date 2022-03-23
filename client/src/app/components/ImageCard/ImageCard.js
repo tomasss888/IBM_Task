@@ -27,12 +27,6 @@ const ImageCard = props => {
 
 const CardMain = props => {
 
-    const [loading, setLoading] = useState(true);
-
-    const imageLoaded = () => {
-        setLoading(false);
-    }
-
     return (
         <>
             {props.items.map((data, index) =>
@@ -44,8 +38,7 @@ const CardMain = props => {
                     data-src={data.images.original.url}
                     variant="top"
                 >
-                    {(loading) ? <Spinner animation="border" /> : <></>}
-                    <Card.Img key={index} variant="top" src={data.images.original.url} onLoad={imageLoaded} />
+                    <Card.Img key={index} variant="top" src={data.images.original.url} />
 
                     <Card.Body>
                         <Card.Title> {data.title} </Card.Title>
