@@ -1,7 +1,7 @@
 var request = require('request-promise');
 const NaturalLanguageUnderstandingV1 = require('ibm-watson/natural-language-understanding/v1');
 const { IamAuthenticator } = require('ibm-watson/auth');
-var searchTypes = require("./funtions/searchTypes")
+var searchTypes = require("../service/watsonClient")
 
 
 const searchController = {
@@ -14,8 +14,6 @@ const searchController = {
 
         searchTypes.searchTypes(searchInput, searchType).then((results) => {
 
-            console.log(results)
-            
             // checks if returned with correct status code
             if (results.status > 400) {
                 var errorToObj = JSON.parse(results.body)
@@ -56,6 +54,7 @@ const searchController = {
                     })
                 })
                 .catch(function (err) {
+                    console.log(err)
                     res.json({ success: "false", error: err });
                 });
         })

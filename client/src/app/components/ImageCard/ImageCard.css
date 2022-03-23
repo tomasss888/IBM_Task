@@ -1,0 +1,37 @@
+.card {
+    box-shadow: -2px 4px 10px #adadad;
+    vertical-align: middle;
+    display: flex;
+    align-items: center;
+    height: 100%;
+    flex-direction: column;
+
+}
+
+.card:hover {
+    box-shadow: -10px 15px 15px #adadad;
+    cursor: pointer;
+
+}
+
+.row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    flex-direction: row;
+    align-items: center;
+    align-items: flex-end;
+
+
+}
+
+.col {
+    flex-grow: 1;
+}
+
+
+element {
+
+    top: 0px;
+
+}

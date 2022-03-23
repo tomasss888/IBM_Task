@@ -1,4 +1,5 @@
 import { Alert } from 'react-bootstrap';
+import "./ErrorBox.css"
 
 const ErrorBox = props => (
 

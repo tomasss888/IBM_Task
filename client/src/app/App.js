@@ -3,10 +3,10 @@ import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router } from "react-router-dom";
 import { Container } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import SearchBar from './components/SearchBar';
-import ImageCard from './components/ImageCard';
-import SelectableButtons from './components/SelectableButtons';
-import ErrorBox from './components/ErrorBox';
+import SearchBar from './components/SearchBar/SearchBar';
+import ImageCard from './components/ImageCard/ImageCard';
+import SelectableButtons from './components/SelectableButtons/SelectableButtons';
+import ErrorBox from './components/ErrorBox/ErrorBox';
 import configData from "../config.json";
 
 
@@ -24,7 +24,7 @@ function App() {
 
   // Call to backend api and apply results to hooks
   async function fetchData(data, method, primarySearch) {
-    await fetch(`${configData.SERVER_URL}api/getGIF?input=${data}&method=${method}`, {
+    await fetch(`${configData.SERVER_URL}api/gif?input=${data}&method=${method}`, {
       method: "GET",
       headers: {
         'Accept': 'application/json'
