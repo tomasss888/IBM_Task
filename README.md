@@ -1,5 +1,5 @@
 ## About the project
-A project to showcase Watson Natural Language Understanding. This project uses watson Watson Natural Language Understanding API to simplify chunks of text into few words, which then are used to search for related GIFs. 
+A project to showcase Watson Natural Language Understanding. This project uses  Watson Natural Language Understanding API to simplify chunks of text into few words, which then are used to search for related GIFs. 
 
 <a href="http://demo.therejoice.co.uk/"><strong>Can see Live Demo here</strong></a>
 <br />
@@ -10,15 +10,30 @@ A project to showcase Watson Natural Language Understanding. This project uses w
 
 * **Server-Side**: Node.js/Express.js
 * **Client-Side**: React.js
-* **Style Library**: Bootstrap
 
 ## Installation
 
-1. Clone the repository
+* Clone the repository.
 ```
 git clone https://github.com/tomasss888/IBM_Task.git 
 ```
-2. Add GIPHY and Watson API keys  to .env for server side
+- Create [dotenv](#file-structure) and [config.json](#file-structure) files with required data. 
+
+For a next step you can either run it locally or host it to a web server.
+
+### Local Preview
+
+* Use `npm run start` command in both [server](https://github.com/tomasss888/IBM_Task/tree/master/server) and [client](https://github.com/tomasss888/IBM_Task/tree/master/client) folders
+
+### Web Server
+
+* Start the docker using shell script.
+```
+./start.sh
+```
+## File structure
+
+* server/.env
 ```
 GIPHY_APIKEY='giphy api key'
 WATSON_APIKEY='watson api key'
@@ -26,15 +41,8 @@ WATSON_URL='watson api cloud URL'
 WATSON_VERSION='watson api version'
 FRONT_END_URL='ip of your frontend server'
 ```
-
-3. And do the same for config.json in client side
+* client/config.json
 ```
 {
     "SERVER_URL": "ip of your backend server"
 }
-```
-
-4. Start the docker using shell script
-```
-./start.sh
-```

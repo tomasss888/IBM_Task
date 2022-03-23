@@ -53,7 +53,7 @@ const CardMain = props => {
 
 }
 
-//splits object (a - object) into chunks (n - how many chunks to split)
+//splits object (a - object) into chunks (n - how many chunks to split) (balanced - tries to keep all chunks similar length)
 function chunkify(a, n, balanced) {
 
     if (n < 2)
